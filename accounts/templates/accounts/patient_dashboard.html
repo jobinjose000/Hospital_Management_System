@@ -1,0 +1,698 @@
+```html
+{% extends 'base.html' %}
+
+{% block title %}
+Patient Portal | Healthcare Management System
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+    :root {
+        --sidebar-width: 270px;
+        --bg-body: #f1f5f9;
+        --brand-dark: #0f172a;
+        --brand-primary: #0284c7;
+        --brand-primary-hover: #0369a1;
+        --card-border: #e2e8f0;
+    }
+
+    body {
+        background-color: var(--bg-body);
+        color: #334155;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: #ffffff;
+        border-right: 1px solid var(--card-border);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .sidebar-brand {
+        padding: 1.5rem 1.75rem;
+        font-weight: 700;
+        color: var(--brand-dark);
+        font-size: 1.2rem;
+        letter-spacing: -0.02em;
+    }
+
+    .nav-link-custom {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 16px;
+        margin: 4px 16px;
+        color: #64748b;
+        font-weight: 500;
+        font-size: 0.925rem;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link-custom i {
+        font-size: 1.15rem;
+    }
+
+    .nav-link-custom:hover {
+        background: #f8fafc;
+        color: var(--brand-primary);
+    }
+
+    .nav-link-custom.active {
+        background: #e0f2fe;
+        color: var(--brand-primary);
+        font-weight: 600;
+    }
+
+    /* Main Wrapper */
+    .main-wrapper {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+    }
+
+    /* Header */
+    .top-navbar {
+        background: #ffffff;
+        border-bottom: 1px solid var(--card-border);
+        padding: 0.85rem 2.25rem;
+    }
+
+    /* Hero Card */
+    .hero-banner {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border-radius: 20px;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.2);
+    }
+
+    .hero-banner::after {
+        content: '';
+        position: absolute;
+        top: -40%;
+        right: -5%;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(
+            circle,
+            rgba(2, 132, 199, 0.25) 0%,
+            rgba(255, 255, 255, 0) 70%
+        );
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* Vitals Tracker Widget */
+    .vital-card {
+        background: #ffffff;
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 1rem 1.25rem;
+    }
+
+    /* Action Cards */
+    .action-card {
+        background: #ffffff;
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        transition: all 0.25s ease;
+    }
+
+    .action-card:hover {
+        transform: translateY(-4px);
+        border-color: #cbd5e1;
+        box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.08);
+    }
+
+    .icon-shape {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+    }
+
+    /* Button Styling */
+    .btn-brand {
+        background-color: var(--brand-primary);
+        color: #ffffff;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-brand:hover {
+        background-color: var(--brand-primary-hover);
+        color: #ffffff;
+    }
+
+    /* Mobile */
+    @media (max-width: 991.98px) {
+        .sidebar {
+            width: 220px;
+        }
+
+        .main-wrapper {
+            margin-left: 220px;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .sidebar {
+            position: relative;
+            width: 100%;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .main-wrapper {
+            margin-left: 0;
+        }
+
+        .top-navbar {
+            padding: 0.85rem 1rem;
+        }
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Sidebar Navigation -->
+<aside class="sidebar">
+
+    <div class="sidebar-brand d-flex align-items-center gap-2">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+        <span>MediCare Plus</span>
+    </div>
+
+    <nav class="mt-2">
+
+        <a href="{% url 'accounts:dashboard' %}"
+           class="nav-link-custom active">
+            <i class="bi bi-grid-1x2"></i>
+            Overview
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-calendar-check"></i>
+            Appointments
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-capsule"></i>
+            Prescriptions
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-journal-check"></i>
+            Lab Results
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-activity"></i>
+            AI Prediction
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-receipt"></i>
+            Payments
+        </a>
+
+        <a href="#" class="nav-link-custom">
+            <i class="bi bi-person"></i>
+            Profile
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- Main Content Wrapper -->
+<div class="main-wrapper">
+
+    <!-- Top Navbar -->
+    <header class="top-navbar d-flex justify-content-between align-items-center">
+
+        <div class="fw-medium text-muted fs-7">
+            Dashboard / Overview
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <button
+                class="btn btn-light rounded-circle position-relative p-0 d-flex align-items-center justify-content-center"
+                style="width: 38px; height: 38px;"
+            >
+                <i class="bi bi-bell text-secondary"></i>
+
+                <span
+                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                </span>
+            </button>
+
+            <div class="d-flex align-items-center gap-2 border-start ps-3 ms-1">
+
+                <div
+                    class="bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold fs-7"
+                    style="width: 36px; height: 36px;"
+                >
+                    {{ request.user.first_name|default:request.user.username|slice:":1"|upper }}
+                </div>
+
+                <div class="d-none d-sm-block">
+
+                    <div class="fw-semibold fs-7 lh-sm">
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    </div>
+
+                    <small class="text-muted" style="font-size: 0.75rem;">
+                        Patient ID: #PT-84920
+                    </small>
+
+                </div>
+
+                <a
+                    href="{% url 'accounts:logout' %}"
+                    class="btn btn-light btn-sm text-secondary ms-2 rounded-2"
+                    title="Logout"
+                >
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main Body -->
+    <main class="p-4 p-md-5">
+
+        <!-- Welcome Hero Banner -->
+        <div class="hero-banner p-4 p-md-5 mb-4">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <span class="badge bg-white bg-opacity-10 text-white-50 px-3 py-2 rounded-pill fw-normal fs-7 mb-3">
+                        <i class="bi bi-shield-check text-info me-1"></i>
+                        Patient Care Portal
+                    </span>
+
+                    <h2 class="fw-bold mb-2">
+                        Welcome back,
+                        {{ request.user.first_name|default:request.user.username }} 👋
+                    </h2>
+
+                    <p class="text-white-50 mb-0 fs-6">
+                        Manage scheduled doctor consultations, check diagnostic laboratory reports,
+                        and access automated health predictors.
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+                    <a
+                        href="#"
+                        class="btn btn-brand px-4 py-2 rounded-3 text-white fs-7"
+                    >
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Book Appointment
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Health Quick Stats / Vitals Bar -->
+        <div class="row g-3 mb-4">
+
+            <!-- Heart Rate -->
+            <div class="col-6 col-md-3">
+
+                <div class="vital-card d-flex align-items-center gap-3">
+
+                    <div class="icon-shape bg-danger-subtle text-danger">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted d-block fs-7">
+                            Heart Rate
+                        </small>
+
+                        <span class="fw-bold text-dark fs-5">
+                            72
+                            <small class="fs-7 text-muted">bpm</small>
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blood Pressure -->
+            <div class="col-6 col-md-3">
+
+                <div class="vital-card d-flex align-items-center gap-3">
+
+                    <div class="icon-shape bg-danger-subtle text-danger">
+                        <i class="bi bi-droplet"></i>
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted d-block fs-7">
+                            Blood Pressure
+                        </small>
+
+                        <span class="fw-bold text-dark fs-5">
+                            120/80
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blood Group -->
+            <div class="col-6 col-md-3">
+
+                <div class="vital-card d-flex align-items-center gap-3">
+
+                    <div class="icon-shape bg-success-subtle text-success">
+                        <i class="bi bi-journal-medical"></i>
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted d-block fs-7">
+                            Blood Group
+                        </small>
+
+                        <span class="fw-bold text-dark fs-5">
+                            O+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Next Visit -->
+            <div class="col-6 col-md-3">
+
+                <div class="vital-card d-flex align-items-center gap-3">
+
+                    <div class="icon-shape bg-warning-subtle text-warning">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted d-block fs-7">
+                            Next Visit
+                        </small>
+
+                        <span class="fw-bold text-dark fs-5">
+                            Aug 20
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature Grid -->
+        <div class="row g-4">
+
+
+            <!-- Appointments Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div class="icon-shape bg-primary-subtle text-primary">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+
+                        <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1 rounded">
+                            2 Upcoming
+                        </span>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Appointments
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        Schedule new visits, modify timings, or connect with specialists online.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        Manage Appointments
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Prescriptions Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div class="icon-shape bg-success-subtle text-success">
+                            <i class="bi bi-capsule"></i>
+                        </div>
+
+                        <span class="badge bg-success-subtle text-success fw-semibold px-2 py-1 rounded">
+                            Active
+                        </span>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Prescriptions
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        View digital prescriptions, active dosages, and request refill approvals.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        View Prescriptions
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Lab Reports Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div class="icon-shape bg-info-subtle text-info">
+                            <i class="bi bi-file-earmark-medical"></i>
+                        </div>
+
+                        <span class="badge bg-info-subtle text-info fw-semibold px-2 py-1 rounded">
+                            New File
+                        </span>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Lab Reports
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        Download PDF results for blood tests, pathology work, and radiology scans.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        Access Reports
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Prediction Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div
+                            class="icon-shape"
+                            style="background: #f3e8ff; color: #7e22ce;"
+                        >
+                            <i class="bi bi-cpu"></i>
+                        </div>
+
+                        <span
+                            class="badge fw-semibold px-2 py-1 rounded"
+                            style="background: #f3e8ff; color: #7e22ce;"
+                        >
+                            AI Smart Care
+                        </span>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Disease Prediction
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        Analyze health symptoms using our preliminary ML prediction engine.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        Open Predictor
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Payments Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div class="icon-shape bg-warning-subtle text-warning">
+                            <i class="bi bi-credit-card"></i>
+                        </div>
+
+                        <span class="badge bg-warning-subtle text-warning fw-semibold px-2 py-1 rounded">
+                            Billing
+                        </span>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Payments & Invoices
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        Review medical invoices, settle pending balances, and access payment receipts.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        View Billing
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Medical History Card -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card action-card h-100 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div class="icon-shape bg-danger-subtle text-danger">
+                            <i class="bi bi-journal-medical"></i>
+                        </div>
+
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">
+                        Medical History
+                    </h5>
+
+                    <p class="text-muted fs-7 mb-4">
+                        Browse complete historical records, admission summaries, and past diagnoses.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="mt-auto btn btn-light text-primary btn-sm fw-semibold rounded-2 border"
+                    >
+                        View History
+                        <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}
+```
